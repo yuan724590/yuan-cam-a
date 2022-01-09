@@ -10,21 +10,16 @@ cloud:
 ribbon:
   eureka:
     enabled: true
-eureka:
-  client:
-    fetch-registry: false
-feign:
-  hystrix:
-    enabled: true
-  httpclient:
-    connection-timeout: 10000
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          thread:
-#            timeoutInMillisecond: 10000
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 10000
+        forceClosed: true
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
 #以下配置已写入apollo，在此写入同样生效，但是apollo的配置会覆盖此配置
 #test: apollo_test
 #spring
@@ -49,5 +44,6 @@ feign:
 #  client:
 #    serviceUrl:
 #      defaultZone: http://localhost:8761/eureka/
+#    fetch-registry: true
 #  instance:
 #    status-page-url: http://127.0.0.1:8762/swagger-ui.html#/

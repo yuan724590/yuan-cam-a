@@ -21,7 +21,7 @@ public class ComputerConfigDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     @ApiModel("ComputerConfigDTO.InsertConfigDTO")
-    public static class InsertConfigDTO{
+    public static class InsertConfigDTO {
         @ApiModelProperty(value = "商品品牌", required = true)
         @NotNull
         private String brand;
@@ -48,7 +48,7 @@ public class ComputerConfigDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     @ApiModel("ComputerConfigDTO.DeleteConfigDTO")
-    public static class DeleteConfigDTO{
+    public static class DeleteConfigDTO {
         @ApiModelProperty(value = "要删除的id列表", required = true)
         @NotEmpty
         List<Integer> idList;
@@ -59,7 +59,7 @@ public class ComputerConfigDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     @ApiModel("ComputerConfigDTO.EditConfigDTO")
-    public static class EditConfigDTO{
+    public static class EditConfigDTO {
         @ApiModelProperty(value = "id", required = true)
         private Integer id;
 
@@ -89,7 +89,7 @@ public class ComputerConfigDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     @ApiModel("ComputerConfigDTO.QueryConfigDTO")
-    public static class QueryConfigDTO{
+    public static class QueryConfigDTO {
 
         @ApiModelProperty(value = "查询条件", required = true)
         private Map<String, String> search;

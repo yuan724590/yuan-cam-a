@@ -8,13 +8,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import yuan.cam.a.ContentConst;
+import yuan.cam.a.common.Constants;
 import yuan.cam.a.dto.ESDTO;
 import yuan.cam.a.vo.ConfigVO;
 
 
 @Api(value = "ES变更")
-@FeignClient(value = ContentConst.SERVICE_NAME)
+@FeignClient(value = Constants.SERVICE_NAME)
 public interface ESApi {
 
     @ApiOperation(value = "新增商品信息", response = ConfigVO.class)

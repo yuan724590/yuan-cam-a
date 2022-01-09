@@ -37,7 +37,7 @@ public class RedisUtil {
     private static int MAX_WAIT;
     //超时时间,单位毫秒
     private static int TIME_OUT;
-    //在借用一个jedis连接实例时，是否提前进行有效性确认操作；如果为true，则得到的jedis实例均是可用的；  
+    //在借用一个jedis连接实例时，是否提前进行有效性确认操作；如果为true，则得到的jedis实例均是可用的；
     private static boolean TEST_ON_BORROW;
     //连接池实例
     private static JedisPool jedisPool = null;
@@ -105,7 +105,7 @@ public class RedisUtil {
         } catch (Exception e) {
             LogUtil.error("initial JedisPoll fail:" + Throwables.getStackTraceAsString(e), qid);
         }
-        
+
     }
 
     //获取jedis连接实例
@@ -143,10 +143,10 @@ public class RedisUtil {
     public static void destroy(String qid){
         if(jedisPool != null) {
             try {
-                jedisPool.destroy();    
+                jedisPool.destroy();
             } catch (Exception e) {
                 LogUtil.error("jedisPool destroy fail " + e, qid);
             }
-        }    
+        }
     }
 }

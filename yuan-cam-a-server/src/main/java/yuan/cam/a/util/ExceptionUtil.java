@@ -15,14 +15,13 @@ public class ExceptionUtil {
 
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResultVO exceptionHandler(MethodArgumentNotValidException e)
-    {
+    public ResultVO exceptionHandler(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         List<ObjectError> errorList = bindingResult.getAllErrors();
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0; i < errorList.size(); i++){
+        for (int i = 0; i < errorList.size(); i++) {
             String[] codes = errorList.get(i).getCodes();
-            if(codes == null || codes.length == 0){
+            if (codes == null || codes.length == 0) {
                 return new ResultVO(500, "参数异常", e.toString());
             }
             String[] fields = codes[0].split("\\.");
@@ -30,7 +29,7 @@ public class ExceptionUtil {
             stringBuilder.append(".");
             stringBuilder.append(fields[2]);
             stringBuilder.append(errorList.get(i).getDefaultMessage());
-            if(i + 1 < errorList.size()){
+            if (i + 1 < errorList.size()) {
                 stringBuilder.append(";");
             }
         }

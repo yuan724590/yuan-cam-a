@@ -13,7 +13,7 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.logging.LoggingSystem;
-import yuan.cam.a.ContentConst;
+import yuan.cam.a.commons.Constants;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -63,33 +63,33 @@ public class LogUtil {
         addLog("ERROR", txt, qid);
     }
 
-    public static void warn(String txt, String qid){
+    public static void warn(String txt, String qid) {
         log.warn(txt);
         addLog("WARN", txt, qid);
     }
 
-    public static void info(String txt, String qid){
+    public static void info(String txt, String qid) {
         log.info(txt);
         addLog("INFO", txt, qid);
     }
 
-    public static void debug(String txt, String qid){
+    public static void debug(String txt, String qid) {
         log.debug(txt);
         addLog("DEBUG", txt, qid);
     }
 
-    public static void addLog(String lv, String txt, String qid){
-        try{
+    public static void addLog(String lv, String txt, String qid) {
+        try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("proj", ContentConst.SERVICE_NAME);
+            jsonObject.put("proj", Constants.SERVICE_NAME);
             jsonObject.put("lv", lv);
             jsonObject.put("txt", txt);
             jsonObject.put("qid", qid);
             jsonObject.put("createTime", (int) (System.currentTimeMillis() / 1000));
-            IndexRequest indexRequest = new IndexRequest(ContentConst.ES_LOG);
+            IndexRequest indexRequest = new IndexRequest(Constants.ES_LOG);
             indexRequest.source(jsonObject, XContentType.JSON);
             EsUtil.getESClient().index(indexRequest, RequestOptions.DEFAULT);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(Throwables.getStackTraceAsString(e));
         }
     }

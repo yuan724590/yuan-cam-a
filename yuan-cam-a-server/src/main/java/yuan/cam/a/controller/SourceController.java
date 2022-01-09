@@ -12,7 +12,7 @@ import yuan.cam.b.vo.ConfigVO;
 
 import java.util.List;
 
-@RequestMapping("/source")
+@RequestMapping
 @RestController
 public class SourceController implements SourceApi {
     @Autowired
@@ -34,7 +34,7 @@ public class SourceController implements SourceApi {
     }
 
     @Override
-    public List<ConfigVO> queryConfig(@RequestBody @Validated ComputerConfigDTO.QueryConfigDTO reqDTO) {
+    public List<ConfigVO> queryConfig(@RequestBody @Validated ComputerConfigDTO.QueryDetailDTO reqDTO) {
         return sourceService.queryConfig(reqDTO.getSearch(), reqDTO.getPage(), reqDTO.getSize());
     }
 }

@@ -6,7 +6,7 @@ import yuan.cam.b.vo.ConfigVO;
 import java.util.List;
 import java.util.Map;
 
-//@FeignClient(value = ContentConst.SERVICE_BB, fallback = SourceServiceImpl.class)
+//@FeignClient(value = Constants.SERVICE_BB, fallback = SourceServiceImpl.class)
 public interface SourceService {
 
     String insertConfig(ComputerConfigDTO.InsertConfigDTO reqDTO);

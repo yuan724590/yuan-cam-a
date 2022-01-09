@@ -23,11 +23,6 @@
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
-
-        <dependency>
-            <groupId>yuan-cam</groupId>
-            <artifactId>yuan-cam-b-api</artifactId>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>

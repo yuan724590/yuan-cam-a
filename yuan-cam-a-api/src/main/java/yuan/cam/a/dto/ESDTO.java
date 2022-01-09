@@ -19,7 +19,7 @@ public class ESDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     @ApiModel("ComputerConfigDTO.ESInsertConfigDTO")
-    public static class ESInsertConfigDTO{
+    public static class ESInsertConfigDTO {
         @ApiModelProperty(value = "新增对象", required = true)
         private ConfigDTO configDTO;
     }
@@ -29,7 +29,7 @@ public class ESDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     @ApiModel("ComputerConfigDTO.ESDeleteConfigDTO")
-    public static class ESDeleteConfigDTO{
+    public static class ESDeleteConfigDTO {
         @ApiModelProperty(value = "要删除的id列表", required = true)
         @NotEmpty
         List<Integer> idList;
@@ -40,7 +40,7 @@ public class ESDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     @ApiModel("ComputerConfigDTO.ESQueryConfigDTO")
-    public static class ESQueryConfigDTO{
+    public static class ESQueryConfigDTO {
 
         @ApiModelProperty(value = "查询条件", required = true)
         private JSONObject jsonObject;

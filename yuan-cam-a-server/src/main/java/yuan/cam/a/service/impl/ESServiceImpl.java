@@ -25,7 +25,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
-import yuan.cam.a.ContentConst;
+import yuan.cam.a.commons.Constants;
 import yuan.cam.a.dto.ConfigDTO;
 import yuan.cam.a.service.ESService;
 import yuan.cam.a.util.EsUtil;
@@ -51,10 +51,10 @@ public class ESServiceImpl implements ESService {
             JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(configDTO));
             jsonObject.put("createTime", (int) (System.currentTimeMillis() / 1000));
             jsonObject.put("updateTime", (int) (System.currentTimeMillis() / 1000));
-            IndexRequest indexRequest = new IndexRequest(ContentConst.ES_INDEX);
+            IndexRequest indexRequest = new IndexRequest(Constants.ES_INDEX);
             indexRequest.source(jsonObject, XContentType.JSON);
             EsUtil.getESClient().index(indexRequest, RequestOptions.DEFAULT);
-        }catch (Exception e){
+        } catch (Exception e) {
             LogUtil.error("请求es异常:" + Throwables.getStackTraceAsString(e), qid);
             return "false,请求es异常";
         }
@@ -63,19 +63,19 @@ public class ESServiceImpl implements ESService {
 
     @Override
     public String deleteConfig(List<Integer> idList, String qid) {
-        try{
+        try {
             LogUtil.debug("开始进行ES删除", qid);
-            DeleteByQueryRequest request = new DeleteByQueryRequest(ContentConst.ES_INDEX);
+            DeleteByQueryRequest request = new DeleteByQueryRequest(Constants.ES_INDEX);
             request.setConflicts("proceed");
             request.setQuery(new BoolQueryBuilder().filter(new TermsQueryBuilder("id", Lists.newArrayList(idList))));
             request.setTimeout(TimeValue.timeValueMinutes(2));
             request.setScroll(TimeValue.timeValueMinutes(10));
             request.setRefresh(true);
             BulkByScrollResponse bulkResponse = EsUtil.getESClient().deleteByQuery(request, RequestOptions.DEFAULT);
-            if(bulkResponse.getStatus().getTotal() != idList.size()){
+            if (bulkResponse.getStatus().getTotal() != idList.size()) {
                 return "false,es删除数据异常";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             LogUtil.error("请求es异常:" + Throwables.getStackTraceAsString(e), qid);
             return "false,请求es删除数据异常";
         }
@@ -85,16 +85,16 @@ public class ESServiceImpl implements ESService {
     @Override
     public JSONArray queryConfig(JSONObject jsonObject, Integer page, Integer size, String qid) {
         JSONArray jsonArray = new JSONArray();
-        try{
+        try {
             LogUtil.debug("开始进行ES查询", qid);
             int from = (page - 1) * size;
             Jedis jedis = RedisUtil.getJedis(qid);
             String key = jsonObject.toString() + page + size;
-            if(jedis.get(key) == null){
+            if (jedis.get(key) == null) {
                 MultiSearchRequest request = new MultiSearchRequest();
-                SearchRequest searchRequest = new SearchRequest(ContentConst.ES_INDEX);
+                SearchRequest searchRequest = new SearchRequest(Constants.ES_INDEX);
                 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-                if(jsonObject.size() > 0){
+                if (jsonObject.size() > 0) {
                     searchSourceBuilder.query(QueryBuilders.matchQuery(jsonObject.keySet().iterator().next(), jsonObject.get(jsonObject.keySet().iterator().next())));
                 }
                 searchSourceBuilder.from(from);
@@ -103,7 +103,7 @@ public class ESServiceImpl implements ESService {
                 request.add(searchRequest);
                 MultiSearchResponse searchResponse = EsUtil.getESClient().msearch(request, RequestOptions.DEFAULT);
                 MultiSearchResponse.Item item = searchResponse.getResponses()[0];
-                for(SearchHit hit : item.getResponse().getHits()) {
+                for (SearchHit hit : item.getResponse().getHits()) {
                     JSONObject json = new JSONObject();
                     json.put("id", hit.getSourceAsMap().get("id"));
                     json.put("brand", hit.getSourceAsMap().get("brand"));
@@ -119,7 +119,7 @@ public class ESServiceImpl implements ESService {
                 return jsonArray;
             }
             jsonArray = (JSONArray) JSON.parse(jedis.get(key));
-        }catch (Exception e){
+        } catch (Exception e) {
             LogUtil.error("请求es异常:" + Throwables.getStackTraceAsString(e), qid);
             return null;
         }
@@ -129,17 +129,17 @@ public class ESServiceImpl implements ESService {
     @Override
     public Integer queryCount(JSONObject jsonObject, String qid) {
         int count = 0;
-        try{
+        try {
             CountRequest countRequest = new CountRequest();
-            countRequest.indices(ContentConst.ES_INDEX);
-            if(jsonObject.size() > 0) {
+            countRequest.indices(Constants.ES_INDEX);
+            if (jsonObject.size() > 0) {
                 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
                 searchSourceBuilder.query(QueryBuilders.matchQuery(jsonObject.keySet().iterator().next(), jsonObject.get(jsonObject.keySet().iterator().next())));
                 countRequest.source(searchSourceBuilder);
             }
             CountResponse countResponse = EsUtil.getESClient().count(countRequest, RequestOptions.DEFAULT);
-            count = (int)countResponse.getCount();
-        }catch (Exception e){
+            count = (int) countResponse.getCount();
+        } catch (Exception e) {
             LogUtil.error("查询总数请求es异常:" + Throwables.getStackTraceAsString(e), qid);
             return 0;
         }

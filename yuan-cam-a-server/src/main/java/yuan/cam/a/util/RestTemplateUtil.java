@@ -12,10 +12,10 @@ public class RestTemplateUtil {
 
     @Bean
     @LoadBalanced//在注册中心里进行查找微服务,负载均衡
-    public RestTemplate restTemplate(){
+    public RestTemplate restTemplate() {
 
         RestTemplate restTemplate = new RestTemplate();
-        return  restTemplate;
+        return restTemplate;
     }
 
 }

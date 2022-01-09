@@ -16,7 +16,7 @@ public class HelloDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     @ApiModel("HelloDTO.HelloRedisDTO")
-    public static class HelloRedisDTO{
+    public static class HelloRedisDTO {
         @ApiModelProperty(value = "名字", required = true)
         @NotNull
         private String name;

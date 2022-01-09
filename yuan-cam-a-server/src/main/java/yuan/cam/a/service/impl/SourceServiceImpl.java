@@ -35,11 +35,11 @@ public class SourceServiceImpl implements SourceService {
 
     @Override
     public List<ConfigVO> queryConfig(Map<String, String> search, int page, int size) {
-        ComputerConfigDTO.QueryConfigDTO queryConfigDTO = new ComputerConfigDTO.QueryConfigDTO();
+        ComputerConfigDTO.QueryDetailDTO queryConfigDTO = new ComputerConfigDTO.QueryDetailDTO();
         queryConfigDTO.setSearch(search);
         queryConfigDTO.setPage(page);
         queryConfigDTO.setSize(size);
-        return sourceApi.queryConfig(queryConfigDTO);
+        return sourceApi.queryDetail(queryConfigDTO);
     }
 
 //url请求的方式 请求b服务

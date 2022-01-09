@@ -4,11 +4,11 @@ import io.swagger.annotations.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import yuan.cam.a.ContentConst;
+import yuan.cam.a.common.Constants;
 import yuan.cam.a.dto.HelloDTO;
 
 @Api(value = "测试")
-@FeignClient(value = ContentConst.SERVICE_NAME)
+@FeignClient(value = Constants.SERVICE_NAME)
 public interface GetHello {
 
     @GetMapping("/apollo")
@@ -17,7 +17,7 @@ public interface GetHello {
     @PostMapping("/redis")
     String sayHelloRedis(@RequestBody @Validated HelloDTO.HelloRedisDTO reqDTO);
 
-    @PostMapping("/Hello")
+    @GetMapping("/hello1")
     String sayHello();
 
     @PostMapping("/Hello/A")
