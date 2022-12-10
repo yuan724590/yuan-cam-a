@@ -7,7 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yuan.cam.a.common.Constants;
 import yuan.cam.b.dto.ComputerConfigDTO;
-import yuan.cam.b.vo.ConfigVO;
+import yuan.cam.b.dto.GoodsInfoDTO;
+import yuan.cam.b.vo.ComputerConfigVO;
 
 import java.util.List;
 
@@ -16,20 +17,16 @@ import java.util.List;
 @FeignClient(value = Constants.SERVICE_NAME)
 public interface SourceApi {
 
-    @ApiOperation(value = "新增商品信息", response = ConfigVO.class)
+    @ApiOperation(value = "新增商品信息", response = String.class)
     @PostMapping(value = "/insert", produces = "application/json;charset=UTF-8", consumes = "application/json;charset=UTF-8")
-    String insertConfig(@RequestBody @Validated ComputerConfigDTO.InsertConfigDTO reqDTO);
+    String insertConfig(@RequestBody @Validated GoodsInfoDTO reqDTO);
 
-    @ApiOperation(value = "删除商品信息", response = ConfigVO.class)
+    @ApiOperation(value = "删除商品信息", response = String.class)
     @PostMapping(value = "/delete", produces = "application/json;charset=UTF-8", consumes = "application/json;charset=UTF-8")
     String deleteConfig(@RequestBody @Validated ComputerConfigDTO.DeleteConfigDTO reqDTO);
 
-    @ApiOperation(value = "编辑商品信息", response = ConfigVO.class)
-    @PostMapping(value = "/edit", produces = "application/json;charset=UTF-8", consumes = "application/json;charset=UTF-8")
-    String editConfig(@RequestBody @Validated ComputerConfigDTO.EditConfigDTO reqDTO);
-
-    @ApiOperation(value = "查询商品信息", response = ConfigVO.class)
+    @ApiOperation(value = "查询商品信息", response = ComputerConfigVO.class)
     @PostMapping(value = "/query", produces = "application/json;charset=UTF-8", consumes = "application/json;charset=UTF-8")
-    List<ConfigVO> queryConfig(@RequestBody @Validated ComputerConfigDTO.QueryDetailDTO reqDTO);
+    List<ComputerConfigVO> queryConfig(@RequestBody @Validated ComputerConfigDTO.QueryDetailDTO reqDTO);
 
 }

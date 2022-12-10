@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import yuan.cam.a.export.SourceApi;
 import yuan.cam.a.service.SourceService;
 import yuan.cam.b.dto.ComputerConfigDTO;
-import yuan.cam.b.vo.ConfigVO;
+import yuan.cam.b.dto.GoodsInfoDTO;
+import yuan.cam.b.vo.ComputerConfigVO;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class SourceController implements SourceApi {
     private SourceService sourceService;
 
     @Override
-    public String insertConfig(@RequestBody @Validated ComputerConfigDTO.InsertConfigDTO reqDTO) {
+    public String insertConfig(@RequestBody @Validated GoodsInfoDTO reqDTO) {
         return sourceService.insertConfig(reqDTO);
     }
 
@@ -29,12 +30,7 @@ public class SourceController implements SourceApi {
     }
 
     @Override
-    public String editConfig(@RequestBody @Validated ComputerConfigDTO.EditConfigDTO reqDTO) {
-        return sourceService.editConfig(reqDTO);
-    }
-
-    @Override
-    public List<ConfigVO> queryConfig(@RequestBody @Validated ComputerConfigDTO.QueryDetailDTO reqDTO) {
+    public List<ComputerConfigVO> queryConfig(@RequestBody @Validated ComputerConfigDTO.QueryDetailDTO reqDTO) {
         return sourceService.queryConfig(reqDTO.getSearch(), reqDTO.getPage(), reqDTO.getSize());
     }
 }
